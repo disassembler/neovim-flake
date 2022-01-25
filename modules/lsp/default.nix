@@ -492,6 +492,18 @@ in {
         setup_cmd("cssls", {'${pkgs.cssls}/bin/css-languageserver', '--stdio'})
       ''}
 
+      ${optionalString cfg.haskell ''
+        lspconfig.hls.setup{
+          capabilities = capabilities;
+          filetypes = { "haskell", "lhaskell", "cabalproject" };
+          cmd = { "haskell-language-server", "--lsp" };
+          settings = {
+            haskell = {
+              formattingProvider = "fourmolu"
+            }
+          };
+        }
+      ''}
       ${optionalString cfg.html ''
         setup_cmd("html", {'${pkgs.htmlls}/bin/html-languageserver', '--stdio'})
       ''}
